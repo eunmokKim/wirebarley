@@ -33,7 +33,6 @@
     $(function(){
         $("#country").change(function(){
             exchangeRateApiCall($("#country").val());
-            console.log("test");
         });
     });
 
@@ -41,19 +40,36 @@
 
     function exchangeRateApiCall(param){
         $.ajax({
+            method:'get',
             url:'/currentExchangeRate',
             success:function(data){
-                const target = "usd"+param;
-                exchangeRate = Number(data[target]);
-                $("#spanExchangeRate").text(data[target] + " " + array[param]);
+                let res = data.data;
+                exchangeRate = Number(res[param]);
+                $("#spanExchangeRate").text(res[param] + " " + array[param]);
             }
         });
     }
 
-    function sendMoney(){
-        exchangeRateApiCall($("#country").val());
-        let amt = (exchangeRate * $("#submitAmt").val()).toFixed(2);
-        $("#total").text(numberWithCommas(amt) + $("#country").val().toUpperCase());
+    function sendMoney(param){
+        let data = {"usd" : $("#submitAmt").val()}
+        $.ajax({
+            method:'post',
+            url:'/currentExchangeRate',
+            contentType:"application/json",
+            dataType:'json',
+            data:JSON.stringify(data),
+            success:function(res){
+                if(res.code === 200){
+                    let amt = (exchangeRate * $("#submitAmt").val()).toFixed(2);
+                    $("#total").text(numberWithCommas(amt) + " " + $("#country").val().toUpperCase());
+                }
+                else{
+                    alert(res.message);
+                }
+
+            }
+        });
+
     }
 
     /**

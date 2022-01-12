@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExchangeRateView {
-    private String usdphp;
-    private String usdjpy;
-    private String usdkrw;
+    private String php;
+    private String jpy;
+    private String krw;
 
 }

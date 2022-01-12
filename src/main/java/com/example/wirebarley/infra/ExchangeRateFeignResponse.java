@@ -32,15 +32,15 @@ public class ExchangeRateFeignResponse {
         @JsonProperty(value = "USDKRW")
         private double usdkrw;
 
-        public String getUsdphp(){
+        public String getFormatUsdphp(){
             return String.format("%.2f", this.usdphp);
         }
 
-        public String getUsdjpy() {
+        public String getFormatUsdjpy() {
             return String.format("%.2f", this.usdjpy);
         }
 
-        public String getUsdkrw() {
+        public String getFormatUsdkrw() {
             return String.format("%.2f", this.usdkrw);
         }
     }
